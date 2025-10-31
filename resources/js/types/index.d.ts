@@ -40,3 +40,17 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface Goal {
+    id: string;
+    intent: string;
+}
+
+export interface Goals {
+    data: Goal[];
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+}
