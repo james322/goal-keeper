@@ -21,6 +21,7 @@ Route::middleware([
 // Goal Routes
 Route::middleware(['auth', ValidateSessionWithWorkOS::class])->group(function () {
     Route::post('goals', [GoalController::class, 'store'])->name('goals.store');
+    Route::delete('goals/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
 });
 
 require __DIR__.'/settings.php';

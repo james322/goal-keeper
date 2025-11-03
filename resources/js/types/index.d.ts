@@ -44,6 +44,8 @@ export interface User {
 export interface Goal {
     id: string;
     intent: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface Goals {

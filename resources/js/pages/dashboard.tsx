@@ -1,9 +1,13 @@
+import { DeleteGoal } from '@/components/goals/delete-goal';
+import { Goal } from '@/components/goals/goal';
 import { GoalForm } from '@/components/goals/goal-form';
 import { Separator } from '@/components/ui/separator';
+import { DeleteGoalContext } from '@/hooks/goals/use-delete-goal-context';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
-import { Goals, type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type Goals, type Goal as GoalType } from '@/types';
 import { Head, InfiniteScroll } from '@inertiajs/react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,6 +17,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard({ goals }: { goals: Goals }) {
+    const [goalToDelete, setGoalToDelete] = useState<GoalType | undefined>(undefined);
+    const [isDeleteGoalOpen, setIsDeleteGoalOpen] = useState(false);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -23,13 +29,14 @@ export default function Dashboard({ goals }: { goals: Goals }) {
                 <div className="flex flex-1 flex-col pt-4">
                     <h3 className="py-2 text-2xl">Goals</h3>
                     <Separator />
-                    <InfiniteScroll data="goals" preserveUrl>
-                        {goals.data.map((goal) => (
-                            <div className="flex flex-col border-b py-4" key={goal.id}>
-                                <span>{goal.intent}</span>
-                            </div>
-                        ))}
-                    </InfiniteScroll>
+                    <DeleteGoalContext value={{ goalToDelete, setGoalToDelete, isOpen: isDeleteGoalOpen, setIsOpen: setIsDeleteGoalOpen }}>
+                        <InfiniteScroll data="goals" preserveUrl>
+                            {goals.data.map((goal) => (
+                                <Goal key={goal.id} goal={goal} />
+                            ))}
+                        </InfiniteScroll>
+                        <DeleteGoal />
+                    </DeleteGoalContext>
                 </div>
             </div>
         </AppLayout>
