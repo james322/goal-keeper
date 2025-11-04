@@ -17,6 +17,7 @@ class GoalController extends Controller
     public function destroy(Goal $goal)
     {
         $goal->delete();
+        session()->flash('flash.message', 'Goal deleted successfully');
 
         return to_route('dashboard');
     }
