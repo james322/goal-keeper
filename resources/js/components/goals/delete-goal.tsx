@@ -17,12 +17,14 @@ export function DeleteGoal() {
                     </DialogDescription>
                 </DialogHeader>
                 {goalToDelete && (
-                    <Form action={destroy(goalToDelete.id)}>
+                    <Form action={destroy(goalToDelete.id)} onSuccess={() => setIsOpen(false)} options={{ preserveScroll: true }}>
                         <DialogFooter>
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>
                             </DialogClose>
-                            <Button variant="destructive">Delete</Button>
+                            <Button type="submit" variant="destructive">
+                                Delete
+                            </Button>
                         </DialogFooter>
                     </Form>
                 )}
