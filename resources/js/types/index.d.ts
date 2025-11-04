@@ -47,6 +47,7 @@ export interface User {
 export interface Goal {
     id: string;
     intent: string;
+    completed: string | null;
     created_at: string;
     updated_at: string;
 }

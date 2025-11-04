@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\MarkGoalCompleteController;
+use App\Http\Controllers\MarkGoalIncompleteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\WorkOS\Http\Middleware\ValidateSessionWithWorkOS;
@@ -22,6 +24,8 @@ Route::middleware([
 Route::middleware(['auth', ValidateSessionWithWorkOS::class])->group(function () {
     Route::post('goals', [GoalController::class, 'store'])->name('goals.store');
     Route::delete('goals/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
+    Route::patch('goals/complete/{goal}', MarkGoalCompleteController::class)->name('goals.status.complete');
+    Route::patch('goals/incomplete/{goal}', MarkGoalIncompleteController::class)->name('goals.status.incomplete');
 });
 
 require __DIR__.'/settings.php';

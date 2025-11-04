@@ -1,8 +1,9 @@
 import { useDeleteGoalContext } from '@/hooks/goals/use-delete-goal-context';
 import { type Goal as GoalType } from '@/types';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { CheckIcon, PencilIcon, TrashIcon } from 'lucide-react';
+import { PencilIcon, TrashIcon } from 'lucide-react';
 import { Button } from '../ui/button';
+import { GoalStatus } from './goal-status';
 
 export function Goal({ goal }: { goal: GoalType }) {
     const createdDisplay = formatDistanceToNowStrict(goal.created_at);
@@ -22,9 +23,7 @@ export function Goal({ goal }: { goal: GoalType }) {
             </div>
             <div className="flex items-center justify-between text-xs opacity-50">
                 <div className="space-x-2">
-                    <Button size="icon" variant="ghost" className="cursor-pointer place-self-center hover:text-green-600 focus:text-green-600">
-                        <CheckIcon />
-                    </Button>
+                    <GoalStatus goal={goal} />
                     <Button size="icon" variant="ghost" className="cursor-pointer place-self-center hover:text-blue-600 focus:text-blue-600">
                         <PencilIcon />
                     </Button>

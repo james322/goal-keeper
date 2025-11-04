@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Goal;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class GoalPolicy
 {
@@ -37,7 +36,7 @@ class GoalPolicy
      */
     public function update(User $user, Goal $goal): bool
     {
-        return false;
+        return $user->id === $goal->user_id;
     }
 
     /**
