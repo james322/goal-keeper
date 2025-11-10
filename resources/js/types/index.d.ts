@@ -27,6 +27,7 @@ export interface SharedData {
     quote: { message: string; author: string };
     auth: Auth;
     sidebarOpen: boolean;
+    csrf_token: string;
     flash: {
         message: string | null;
     };
@@ -47,6 +48,7 @@ export interface User {
 export interface Goal {
     id: string;
     intent: string;
+    motivation: Motivation | null;
     completed: string | null;
     created_at: string;
     updated_at: string;
@@ -59,4 +61,11 @@ export interface Goals {
         label: string;
         active: boolean;
     }[];
+}
+
+export interface Motivation {
+    id: string;
+    motivation: string;
+    created_at: string;
+    updated_at: string;
 }

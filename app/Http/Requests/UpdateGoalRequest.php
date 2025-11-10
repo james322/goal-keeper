@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateGoalRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateGoalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::user()->can('update', $this->goal);
     }
 
     /**
