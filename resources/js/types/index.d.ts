@@ -30,6 +30,7 @@ export interface SharedData {
     csrf_token: string;
     flash: {
         message: string | null;
+        first_goal: 0 | 1;
     };
     [key: string]: unknown;
 }

@@ -27,3 +27,5 @@ yarn-error.log
 /.zed
 /_ide_helper*.php
 /.codebook.toml
+prompts.json
+weekly-prompts.json

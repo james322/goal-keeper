@@ -3,6 +3,7 @@ import { store } from '@/routes/goals';
 import { Form } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
+import { Spinner } from '../ui/spinner';
 
 export function GoalForm() {
     const [characterCount, setCharacterCount] = useState(0);
@@ -23,13 +24,15 @@ export function GoalForm() {
         <Form
             action={store()}
             resetOnSuccess
+            disableWhileProcessing
             onSuccess={() => setLocalStorage('')}
             options={{
                 reset: ['goals'],
+                preserveScroll: false,
             }}
             className="space-y-2"
         >
-            {({ errors }) => (
+            {({ errors, processing }) => (
                 <>
                     <textarea
                         autoFocus
@@ -40,15 +43,13 @@ export function GoalForm() {
                         maxLength={500}
                         value={value}
                     ></textarea>
-                    <div className="flex flex-row-reverse text-base text-gray-800 dark:text-gray-200">
+                    <div className="flex items-center justify-between text-base text-gray-800 dark:text-gray-200">
                         <span className="tracking-wide">{`${characterCount}/500`}</span>
-                    </div>
-                    <div>{errors.intent && <p className="text-red-500">{errors.intent}</p>}</div>
-                    <div className="flex flex-row-reverse">
-                        <Button type="submit" size="lg" variant="secondary">
-                            Save
+                        <Button disabled={processing} type="submit" size="lg" variant="secondary">
+                            {processing ? <Spinner /> : 'Save'}
                         </Button>
                     </div>
+                    <div>{errors.intent && <p className="text-red-500">{errors.intent}</p>}</div>
                 </>
             )}
         </Form>

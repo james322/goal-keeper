@@ -1,11 +1,17 @@
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import MarkDown from 'react-markdown';
 import { Button } from '../ui/button';
 import { AiMotivationSkeleton } from './ai-motivation-skeleton';
-export function AiMotivation({ motivation, busy }: { motivation: string | null; busy: boolean }) {
-    const [collapsed, setCollapsed] = useState(true);
 
+interface AiMotivationProps {
+    motivation: string | null;
+    busy: boolean;
+    collapsed: boolean;
+    setCollapsed: Dispatch<SetStateAction<boolean>>;
+}
+
+export function AiMotivation({ motivation, busy, collapsed, setCollapsed }: AiMotivationProps) {
     return (
         <div className="grid w-full animate-grow grid-cols-6 items-center rounded-sm bg-stone-800 px-2">
             <span className={cn(['relative col-span-6 p-2', { 'max-h-[200px] overflow-hidden': motivation && collapsed }])}>

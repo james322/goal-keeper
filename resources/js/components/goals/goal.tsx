@@ -7,6 +7,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { Sparkles, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { AiMotivation } from './ai-motivation';
 import { GoalStatus } from './goal-status';
 
@@ -35,6 +36,7 @@ export function Goal({ goal }: { goal: GoalType }) {
     const { setGoalToDelete, setIsOpen: setDeleteGoalIsOpen } = useDeleteGoalContext();
     const [motivation, setMotivation] = useState<string | null>(goal?.motivation?.motivation ?? null);
     const [busy, setBusy] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const csrf_token = usePage<SharedData>().props.csrf_token;
 
     function deleteGoal() {
@@ -56,6 +58,7 @@ export function Goal({ goal }: { goal: GoalType }) {
             const result = await response.json();
 
             setMotivation(result.message);
+            setCollapsed(false);
         } catch (error) {
             console.error(error);
         } finally {
@@ -64,23 +67,35 @@ export function Goal({ goal }: { goal: GoalType }) {
     }
 
     return (
-        <div className="flex flex-col border-b py-4">
+        <div className="group flex flex-col border-b py-4">
             <div className="flex flex-row-reverse">
-                <Button
-                    title="AI motivation"
-                    size="icon"
-                    variant="ghost"
-                    className="cursor-pointer place-self-center text-yellow-300 hover:text-yellow-300 focus:text-yellow-300"
-                    disabled={busy || !!motivation}
-                    onClick={() => getMotivation()}
-                >
-                    {<Sparkles className={cn(['size-6', { 'animate-pulse': busy }])} />}
-                </Button>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            title="AI motivation"
+                            size="icon"
+                            variant="ghost"
+                            className={cn([
+                                { 'animate-bounce': !motivation && !goal.completed && !busy, 'animate-spin': busy },
+                                'cursor-pointer place-self-center text-yellow-300 hover:text-yellow-300 focus:text-yellow-300',
+                            ])}
+                            disabled={busy || !!motivation || !!goal.completed}
+                            onClick={() => getMotivation()}
+                        >
+                            {<Sparkles className={cn(['size-6', { 'animate-pulse': busy }])} />}
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>AI motivation</TooltipContent>
+                </Tooltip>
             </div>
             <div className="grid w-full grid-cols-6 items-center pb-2">
-                <span className="col-span-6 p-2">{goal.intent}</span>
+                <span
+                    className={cn([{ 'line-through opacity-50 group-hover:no-underline group-hover:opacity-100': goal.completed }, 'col-span-6 p-2'])}
+                >
+                    {goal.intent}
+                </span>
             </div>
-            {(busy || motivation) && <AiMotivation motivation={motivation} busy={busy} />}
+            {(busy || motivation) && <AiMotivation motivation={motivation} busy={busy} collapsed={collapsed} setCollapsed={setCollapsed} />}
             <div className="flex items-center justify-between pt-2 text-xs opacity-50">
                 <div className="space-x-2">
                     <GoalStatus goal={goal} />

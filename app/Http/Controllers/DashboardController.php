@@ -13,7 +13,10 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         return Inertia::render('dashboard', [
-            'goals' => Inertia::scroll(fn () => $request->user()->goals()->with('motivation')->latest()->cursorPaginate(20)),
+            'goals' => Inertia::scroll(fn () => $request->user()->goals()
+                ->when($request->input('filter') == 'completed', fn ($query) => $query->whereNotNull('completed'))
+                ->when($request->input('filter') == 'incomplete', fn ($query) => $query->whereNull('completed'))
+                ->with('motivation')->latest()->paginate(10)),
         ]);
     }
 }
