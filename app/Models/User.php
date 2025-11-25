@@ -42,4 +42,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Goal::class);
     }
+
+    public function weeklyIncompleteGoals(): HasMany
+    {
+        return $this->hasMany(Goal::class)
+            ->whereNull('completed')
+            ->whereDate('updated_at', '<=', now()->subDays(2))->inRandomOrder()->limit(3);
+    }
 }

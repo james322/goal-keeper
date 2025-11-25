@@ -21,7 +21,7 @@ export function GoalStatus({ goal }: { goal: GoalType }) {
                 </Form>
             )}
             {goal.completed && (
-                <Form className="inline-block" action={incomplete(goal.id)}>
+                <Form className="inline-block" action={incomplete(goal.id)} disableWhileProcessing>
                     <input type="hidden" name="completed" value={0} />
                     <Button
                         type="submit"

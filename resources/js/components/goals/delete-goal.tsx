@@ -17,7 +17,12 @@ export function DeleteGoal() {
                     </DialogDescription>
                 </DialogHeader>
                 {goalToDelete && (
-                    <Form action={destroy(goalToDelete.id)} onSuccess={() => setIsOpen(false)} options={{ preserveScroll: true }}>
+                    <Form
+                        action={destroy(goalToDelete.id)}
+                        onSuccess={() => setIsOpen(false)}
+                        options={{ preserveScroll: true }}
+                        disableWhileProcessing
+                    >
                         <DialogFooter>
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>

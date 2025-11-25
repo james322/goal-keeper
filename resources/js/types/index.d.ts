@@ -62,6 +62,7 @@ export interface Goals {
         label: string;
         active: boolean;
     }[];
+    total: number;
 }
 
 export interface Motivation {

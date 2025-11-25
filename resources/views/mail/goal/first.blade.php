@@ -3,7 +3,7 @@ Hi {{$user->name}}, congratulations on making your first goal with GoalKeeper! H
 
 {{$motivation}}
 
-<x-mail::button :url="route('goals.index')">
+<x-mail::button :url="route('dashboard')">
 Your goals
 </x-mail::button>
 

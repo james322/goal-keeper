@@ -5,7 +5,7 @@ import { SharedData, type Goal as GoalType } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { Sparkles, TrashIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { AiMotivation } from './ai-motivation';
@@ -32,7 +32,7 @@ function GoalDate({ goal }: { goal: GoalType }) {
     );
 }
 
-export function Goal({ goal }: { goal: GoalType }) {
+export function Goal({ goal, firstGoal = false }: { goal: GoalType; firstGoal: boolean }) {
     const { setGoalToDelete, setIsOpen: setDeleteGoalIsOpen } = useDeleteGoalContext();
     const [motivation, setMotivation] = useState<string | null>(goal?.motivation?.motivation ?? null);
     const [busy, setBusy] = useState(false);
@@ -66,6 +66,12 @@ export function Goal({ goal }: { goal: GoalType }) {
         }
     }
 
+    useEffect(() => {
+        if (firstGoal && !goal.completed && !busy && !motivation) {
+            getMotivation();
+        }
+    }, []);
+
     return (
         <div className="group flex flex-col border-b py-4">
             <div className="flex flex-row-reverse">
@@ -77,7 +83,7 @@ export function Goal({ goal }: { goal: GoalType }) {
                             variant="ghost"
                             className={cn([
                                 { 'animate-bounce': !motivation && !goal.completed && !busy, 'animate-spin': busy },
-                                'cursor-pointer place-self-center text-yellow-300 hover:text-yellow-300 focus:text-yellow-300',
+                                'cursor-pointer place-self-center text-yellow-500 hover:text-yellow-500 focus:text-yellow-500',
                             ])}
                             disabled={busy || !!motivation || !!goal.completed}
                             onClick={() => getMotivation()}

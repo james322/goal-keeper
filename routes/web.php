@@ -24,12 +24,12 @@ Route::middleware([
 Route::middleware(['auth', ValidateSessionWithWorkOS::class])->group(function () {
     // Goal Routes
     Route::post('goals', [GoalController::class, 'store'])->name('goals.store');
-    Route::delete('goals/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
+    Route::delete('goals/{goal}', [GoalController::class, 'destroy'])->can('delete', 'goal')->name('goals.destroy');
     Route::patch('goals/complete/{goal}', MarkGoalCompleteController::class)->name('goals.status.complete');
     Route::patch('goals/incomplete/{goal}', MarkGoalIncompleteController::class)->name('goals.status.incomplete');
 
     // Motivation Routes
-    Route::post('motivation/{goal}', GenerateAIMotivationController::class)->name('motivation.generate');
+    Route::post('motivation/{goal}', GenerateAIMotivationController::class)->can('update', 'goal')->name('motivation.generate');
 
 });
 

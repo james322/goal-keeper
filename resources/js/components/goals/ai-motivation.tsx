@@ -13,7 +13,7 @@ interface AiMotivationProps {
 
 export function AiMotivation({ motivation, busy, collapsed, setCollapsed }: AiMotivationProps) {
     return (
-        <div className="grid w-full animate-grow grid-cols-6 items-center rounded-sm bg-stone-800 px-2">
+        <div className="grid w-full animate-grow grid-cols-6 items-center rounded-sm bg-stone-100 px-2 dark:bg-stone-800">
             <span className={cn(['relative col-span-6 p-2', { 'max-h-[200px] overflow-hidden': motivation && collapsed }])}>
                 {motivation && (
                     <div

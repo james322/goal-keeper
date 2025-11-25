@@ -23,7 +23,7 @@ export default function Dashboard({ goals }: { goals: Goals }) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Head title="Goals" />
             <div className="mx-auto flex h-full w-full max-w-xl flex-1 flex-col gap-4 overflow-x-auto rounded-xl py-4">
                 <div className="text-2xl">
                     <GoalForm />

@@ -1,5 +1,5 @@
-import { Goals as GoalsType } from '@/types';
-import { InfiniteScroll } from '@inertiajs/react';
+import { Goals as GoalsType, SharedData } from '@/types';
+import { InfiniteScroll, usePage } from '@inertiajs/react';
 import { Button } from '../ui/button';
 import { Goal } from './goal';
 
@@ -12,6 +12,7 @@ function LoadMoreButton({ fetch, hasMore }: { fetch: () => void; hasMore: boolea
 }
 
 export function GoalList({ goals }: { goals: GoalsType }) {
+    const firstGoal = usePage<SharedData>().props?.flash?.first_goal;
     return (
         <div className="flex flex-col items-center">
             <InfiniteScroll
@@ -23,9 +24,9 @@ export function GoalList({ goals }: { goals: GoalsType }) {
                 manual
                 next={({ fetch, hasMore }) => <LoadMoreButton hasMore={hasMore} fetch={fetch} />}
             >
-                {goals.data.map((goal) => (
+                {goals.data.map((goal, index) => (
                     <li key={goal.id}>
-                        <Goal goal={goal} />
+                        <Goal goal={goal} firstGoal={firstGoal == 1 && index == 0} />
                     </li>
                 ))}
             </InfiniteScroll>
