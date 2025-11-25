@@ -14,8 +14,7 @@ class GenerateMotivation
     public function execute(): CreateResponse
     {
         $prompt = Prompt::inRandomOrder()->first();
-        // $assistantPrompt = 'You are a motivational coach who helps users achieve their goals.Your responses should not include html tags or markdown tables. Your advice should be 500 words or less.';
-        // $userPrompt = "A user has a goal of '$this->goal->intent' give them specific advice on how to do this or else give them general motivation.";
+
         $assistantPrompt = $prompt->formattedAssistant();
         $userPrompt = $prompt->formattedUser($this->goal->intent);
 
