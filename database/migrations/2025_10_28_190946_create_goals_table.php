@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('user_id')->constrained();
+            $table->foreignUlid('user_id')->constrained()->cascadeOnDelete();
             $table->text('intent');
             $table->dateTime('completed')->nullable();
             $table->timestamps();

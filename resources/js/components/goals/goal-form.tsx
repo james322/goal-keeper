@@ -27,7 +27,6 @@ export function GoalForm() {
             disableWhileProcessing
             onSuccess={() => setLocalStorage('')}
             options={{
-                reset: ['goals'],
                 preserveScroll: false,
             }}
             className="space-y-2"

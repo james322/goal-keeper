@@ -13,6 +13,7 @@ function LoadMoreButton({ fetch, hasMore }: { fetch: () => void; hasMore: boolea
 
 export function GoalList({ goals }: { goals: GoalsType }) {
     const firstGoal = usePage<SharedData>().props?.flash?.first_goal;
+
     return (
         <div className="flex flex-col items-center">
             <InfiniteScroll

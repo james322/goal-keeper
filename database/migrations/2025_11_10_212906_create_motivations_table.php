@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('motivations', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('goal_id')->constrained();
+            $table->foreignUlid('goal_id')->constrained()->cascadeOnDelete();
             $table->text('motivation');
             $table->text('assistant_prompt');
             $table->text('user_prompt');
