@@ -32,7 +32,6 @@ class SendMotivation
                             'content' => $prompt->formattedUser(),
                         ],
                     ],
-                    'max_completion_tokens' => 1000,
 
                 ]);
 

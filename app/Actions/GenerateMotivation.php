@@ -30,15 +30,16 @@ class GenerateMotivation
                     'content' => $userPrompt,
                 ],
             ],
-            'max_completion_tokens' => 1000,
 
         ]);
 
-        $this->goal->motivation()->create([
-            'motivation' => $response->choices[0]->message->content,
-            'user_prompt' => $userPrompt,
-            'assistant_prompt' => $assistantPrompt,
-        ]);
+        if ($response->choices[0]->message->content) {
+            $this->goal->motivation()->create([
+                'motivation' => $response->choices[0]->message->content,
+                'user_prompt' => $userPrompt,
+                'assistant_prompt' => $assistantPrompt,
+            ]);
+        }
 
         return $response;
     }
