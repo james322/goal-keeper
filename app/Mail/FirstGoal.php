@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Throwable;
 
 class FirstGoal extends Mailable implements ShouldQueue
 {
@@ -37,5 +38,10 @@ class FirstGoal extends Mailable implements ShouldQueue
         return new Content(
             markdown: 'mail.goal.first',
         );
+    }
+
+    public function failed(Throwable $exception)
+    {
+        report($exception);
     }
 }
