@@ -22,7 +22,7 @@ export function AiMotivation({ motivation, busy, collapsed, setCollapsed }: AiMo
                             { 'max-h-[200px] overflow-hidden mask-b-from-20% mask-b-to-80%': motivation && collapsed },
                         ])}
                     >
-                        <div className="[&_li]:mt-6 [&_p]:mt-6 [&_ul]:mt-6 [&_ul]:list-inside [&_ul]:list-disc [&_ul]:pl-4">
+                        <div className="[&_li]:mt-6 [&_p]:mt-6 [&_p]:text-lg [&_ul]:mt-6 [&_ul]:list-inside [&_ul]:list-disc [&_ul]:pl-4">
                             <MarkDown>{motivation}</MarkDown>
                         </div>
                     </div>
