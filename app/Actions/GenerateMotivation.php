@@ -22,7 +22,7 @@ class GenerateMotivation
             'model' => config('ai-details.model'),
             'messages' => [
                 [
-                    'role' => 'assistant',
+                    'role' => 'developer',
                     'content' => $assistantPrompt,
                 ],
                 [
