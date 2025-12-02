@@ -26,4 +26,12 @@ class StoreGoalRequest extends FormRequest
             'intent' => ['required', 'string', 'min:1', 'max:500'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'intent.required' => 'You cannot have an blank goal.',
+            'intent.max' => 'Your goal must not exceed 500 characters.',
+        ];
+    }
 }
