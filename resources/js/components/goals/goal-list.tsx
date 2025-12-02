@@ -1,4 +1,4 @@
-import { Goals as GoalsType, SharedData } from '@/types';
+import type { GoalsType, SharedData } from '@/types';
 import { InfiniteScroll, usePage } from '@inertiajs/react';
 import { Button } from '../ui/button';
 import { Goal } from './goal';

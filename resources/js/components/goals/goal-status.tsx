@@ -1,5 +1,5 @@
 import { complete, incomplete } from '@/routes/goals/status';
-import { Goal as GoalType } from '@/types';
+import type { GoalType } from '@/types';
 import { Form } from '@inertiajs/react';
 import { CheckIcon } from 'lucide-react';
 import { Button } from '../ui/button';

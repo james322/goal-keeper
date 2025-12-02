@@ -1,4 +1,4 @@
-import { type Goal as GoalType } from '@/types';
+import { type GoalType } from '@/types';
 import { createContext, useContext } from 'react';
 export interface DeleteGoalContextType {
     goalToDelete: GoalType | undefined;

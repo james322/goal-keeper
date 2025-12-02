@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { DeleteGoalContext } from '@/hooks/goals/use-delete-goal-context';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
-import { type BreadcrumbItem, type Goals, type Goal as GoalType } from '@/types';
+import type { BreadcrumbItem, GoalsType, GoalType } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 
@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ goals }: { goals: Goals }) {
+export default function Dashboard({ goals }: { goals: GoalsType }) {
     const [goalToDelete, setGoalToDelete] = useState<GoalType | undefined>(undefined);
     const [isDeleteGoalOpen, setIsDeleteGoalOpen] = useState(false);
 

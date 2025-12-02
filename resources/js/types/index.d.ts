@@ -46,7 +46,7 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
-export interface Goal {
+export interface GoalType {
     id: string;
     intent: string;
     motivation: Motivation | null;
@@ -55,8 +55,8 @@ export interface Goal {
     updated_at: string;
 }
 
-export interface Goals {
-    data: Goal[];
+export interface GoalsType {
+    data: GoalType[];
     links: {
         url: string | null;
         label: string;

@@ -1,7 +1,7 @@
 import { useDeleteGoalContext } from '@/hooks/goals/use-delete-goal-context';
 import { cn } from '@/lib/utils';
 import { generate } from '@/routes/motivation';
-import { SharedData, type Goal as GoalType } from '@/types';
+import type { GoalType, SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { Sparkles, TrashIcon } from 'lucide-react';
@@ -94,7 +94,7 @@ export function Goal({ goal, firstGoal = false }: { goal: GoalType; firstGoal: b
                     <TooltipContent>AI motivation</TooltipContent>
                 </Tooltip>
             </div>
-            <div className="grid w-full grid-cols-6 items-center pb-2">
+            <div className="grid w-full items-center pb-2">
                 <span
                     className={cn([{ 'line-through opacity-50 group-hover:no-underline group-hover:opacity-100': goal.completed }, 'col-span-6 p-2'])}
                 >
