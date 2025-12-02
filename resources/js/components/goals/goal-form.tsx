@@ -20,6 +20,13 @@ export function GoalForm() {
         setCharacterCount(value.length);
     }, [value]);
 
+    function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>, callback: () => void) {
+        if ((e.key === 'Enter' || e.keyCode === 13) && e.shiftKey) {
+            e.preventDefault();
+            callback();
+        }
+    }
+
     return (
         <Form
             action={store()}
@@ -31,7 +38,7 @@ export function GoalForm() {
             }}
             className="space-y-2"
         >
-            {({ errors, processing }) => (
+            {({ errors, processing, submit }) => (
                 <>
                     <textarea
                         autoFocus
@@ -41,6 +48,7 @@ export function GoalForm() {
                         onChange={handleInputChange}
                         maxLength={500}
                         value={value}
+                        onKeyDown={(e) => handleKeyDown(e, submit)}
                     ></textarea>
                     <div className="flex items-center justify-between text-base text-gray-800 dark:text-gray-200">
                         <span className="tracking-wide">{`${characterCount}/500`}</span>
