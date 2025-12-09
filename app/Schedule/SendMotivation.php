@@ -10,7 +10,7 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 class SendMotivation
 {
-    public function __invoke()
+    public function __invoke(): void
     {
         User::with('weeklyIncompleteGoals')->whereHas('goals', function ($query) {
 

@@ -6,6 +6,7 @@ use App\Actions\GenerateMotivation;
 use App\Http\Requests\UpdateGoalRequest;
 use App\Mail\FirstGoal;
 use App\Models\Goal;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 
 class GenerateAIMotivationController extends Controller
@@ -13,7 +14,7 @@ class GenerateAIMotivationController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(UpdateGoalRequest $request, Goal $goal)
+    public function __invoke(UpdateGoalRequest $request, Goal $goal): JsonResponse
     {
         abort_if($goal->motivation()->exists(), 422);
 

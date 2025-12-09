@@ -39,11 +39,13 @@ class User extends Authenticatable
         ];
     }
 
+    /** @return HasMany<Goal, $this> */
     public function goals(): HasMany
     {
         return $this->hasMany(Goal::class);
     }
 
+    /** @return HasMany<Goal, $this> */
     public function weeklyIncompleteGoals(): HasMany
     {
         return $this->hasMany(Goal::class)

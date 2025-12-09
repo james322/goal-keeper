@@ -40,7 +40,7 @@ class FirstGoal extends Mailable implements ShouldQueue
         );
     }
 
-    public function failed(Throwable $exception)
+    public function failed(Throwable $exception): void
     {
         report($exception);
     }

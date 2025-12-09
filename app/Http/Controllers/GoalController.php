@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGoalRequest;
 use App\Models\Goal;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class GoalController extends Controller
 {
-    public function show(Goal $goal)
+    public function show(Goal $goal): Response
     {
         return Inertia::render('goals/show', [
             'goal' => fn () => $goal->load(['motivation', 'user']),
@@ -21,7 +23,7 @@ class GoalController extends Controller
         ]);
     }
 
-    public function store(StoreGoalRequest $request)
+    public function store(StoreGoalRequest $request): RedirectResponse
     {
 
         $goal = $request->user()->goals()->create($request->validated());
@@ -35,7 +37,7 @@ class GoalController extends Controller
         return to_route('dashboard');
     }
 
-    public function destroy(Goal $goal)
+    public function destroy(Goal $goal): RedirectResponse
     {
         $goal->delete();
         session()->flash('flash.message', 'Goal deleted successfully');
