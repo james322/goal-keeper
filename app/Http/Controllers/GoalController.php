@@ -4,9 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGoalRequest;
 use App\Models\Goal;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class GoalController extends Controller
 {
+    public function show(Goal $goal)
+    {
+        return Inertia::render('goals/show', [
+            'goal' => fn () => $goal->load(['motivation', 'user']),
+            'comments' => Inertia::scroll(fn () => $goal->comments()->with('user')->latest()->cursorPaginate(50)),
+            'can' => [
+                'update_goal' => Auth::check() && Auth::user()->can('update', $goal),
+                'delete_goal' => Auth::check() && Auth::user()->can('delete', $goal),
+            ],
+        ]);
+    }
+
     public function store(StoreGoalRequest $request)
     {
 

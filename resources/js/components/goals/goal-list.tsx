@@ -1,7 +1,7 @@
 import type { GoalsType, SharedData } from '@/types';
 import { InfiniteScroll, usePage } from '@inertiajs/react';
 import { Button } from '../ui/button';
-import { Goal } from './goal';
+import { GoalListItem } from './goal-list-item';
 
 function LoadMoreButton({ fetch, hasMore }: { fetch: () => void; hasMore: boolean }) {
     return hasMore ? (
@@ -27,7 +27,7 @@ export function GoalList({ goals }: { goals: GoalsType }) {
             >
                 {goals.data.map((goal, index) => (
                     <li key={goal.id}>
-                        <Goal goal={goal} firstGoal={firstGoal == 1 && index == 0} />
+                        <GoalListItem goal={goal} firstGoal={firstGoal == 1 && index == 0} />
                     </li>
                 ))}
             </InfiniteScroll>

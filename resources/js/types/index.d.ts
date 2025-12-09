@@ -35,6 +35,15 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
+export interface ShowGoalData extends SharedData {
+    goal: GoalType;
+    comments: CommentsType;
+    can: {
+        update_goal: boolean;
+        delete_goal: boolean;
+    };
+}
+
 export interface User {
     id: number;
     name: string;
@@ -53,10 +62,22 @@ export interface GoalType {
     completed: string | null;
     created_at: string;
     updated_at: string;
+    user?: User;
+    comments?: CommentType[];
 }
 
 export interface GoalsType {
     data: GoalType[];
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    total: number;
+}
+
+export interface CommentsType {
+    data: CommentType[];
     links: {
         url: string | null;
         label: string;
@@ -70,4 +91,15 @@ export interface Motivation {
     motivation: string;
     created_at: string;
     updated_at: string;
+}
+
+export interface CommentType {
+    id: string;
+    user_id: string;
+    goal_id: string;
+    body: string;
+    created_at: string;
+    updated_at: string;
+    user?: User | null;
+    goal?: GoalType;
 }

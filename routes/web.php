@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GenerateAIMotivationController;
 use App\Http\Controllers\GoalController;
@@ -32,6 +33,10 @@ Route::middleware(['auth', ValidateSessionWithWorkOS::class])->group(function ()
     Route::post('motivation/{goal}', GenerateAIMotivationController::class)->can('update', 'goal')->name('motivation.generate');
 
 });
+
+Route::get('goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
+
+Route::post('goals/{goal}/comments', [CommentController::class, 'store'])->can('comment', 'goal')->name('comments.store');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

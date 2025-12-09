@@ -31,6 +31,7 @@ test('profile information can be updated', function () {
 });
 
 test('user can delete their account', function () {
+
     $user = User::factory()->create();
 
     $response = $this
@@ -45,4 +46,4 @@ test('user can delete their account', function () {
 
     $this->assertGuest();
     expect($user->fresh())->toBeNull();
-});
+})->todo(note: 'delete goals, motivation and comments');

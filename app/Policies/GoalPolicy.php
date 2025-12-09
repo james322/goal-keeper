@@ -8,27 +8,15 @@ use App\Models\User;
 class GoalPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
-
-    /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Goal $goal): bool
     {
-        return false;
-    }
+        if ($goal->is_public) {
+            return true;
+        }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        return false;
+        return $user->id === $goal->user_id;
     }
 
     /**
@@ -48,18 +36,19 @@ class GoalPolicy
     }
 
     /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Goal $goal): bool
-    {
-        return false;
-    }
-
-    /**
      * Determine whether the user can permanently delete the model.
      */
     public function forceDelete(User $user, Goal $goal): bool
     {
         return false;
+    }
+
+    public function comment(?User $user, Goal $goal): bool
+    {
+        if ($goal->is_public) {
+            return true;
+        }
+
+        return $user?->id === $goal->user_id;
     }
 }
