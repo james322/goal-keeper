@@ -34,7 +34,7 @@ Route::middleware(['auth', ValidateSessionWithWorkOS::class])->group(function ()
 
 });
 
-Route::get('goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
+Route::get('goals/{goal}', [GoalController::class, 'show'])->can('view', 'goal')->name('goals.show');
 
 Route::post('goals/{goal}/comments', [CommentController::class, 'store'])->can('comment', 'goal')->name('comments.store');
 

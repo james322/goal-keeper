@@ -9,6 +9,7 @@ import { DeleteGoalButton } from './delete-goal-button';
 import { GenerateAiMotivation } from './generate-ai-motivation';
 import { GoalDate } from './goal-date';
 import { GoalStatus } from './goal-status';
+import { ShareDropdown } from './ShareDropdown';
 
 export function GoalListItem({ goal, firstGoal = false }: { goal: GoalType; firstGoal: boolean }) {
     const { busy, collapsed, setCollapsed, motivation, getMotivation } = useGetMotivation(goal);
@@ -21,7 +22,8 @@ export function GoalListItem({ goal, firstGoal = false }: { goal: GoalType; firs
 
     return (
         <div className="group flex flex-col border-b py-4">
-            <div className="flex flex-row-reverse">
+            <div className="flex items-center justify-between">
+                {goal.is_public ? <ShareDropdown goal={goal} /> : <span></span>}
                 <GenerateAiMotivation motivation={motivation} busy={busy} goal={goal} getMotivation={getMotivation} />
             </div>
             <Link href={show(goal)}>

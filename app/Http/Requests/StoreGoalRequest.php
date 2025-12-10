@@ -24,6 +24,7 @@ class StoreGoalRequest extends FormRequest
     {
         return [
             'intent' => ['required', 'string', 'min:1', 'max:500'],
+            'is_public' => ['required', 'boolean'],
         ];
     }
 

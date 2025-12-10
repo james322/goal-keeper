@@ -17,4 +17,18 @@ class StoreCommentRequest extends FormRequest
             'body' => ['required', 'string', 'min:1', 'max:500'],
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'body.required' => 'Comment must be at least 1 character.',
+            'body.min' => 'Comment must be at least 1 character.',
+            'body.max' => 'Comment cannot be greater than 500 characters.',
+        ];
+    }
 }

@@ -58,6 +58,7 @@ export interface User {
 export interface GoalType {
     id: string;
     intent: string;
+    is_public: boolean;
     motivation: Motivation | null;
     completed: string | null;
     created_at: string;

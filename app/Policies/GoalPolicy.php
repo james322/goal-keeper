@@ -10,13 +10,13 @@ class GoalPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Goal $goal): bool
+    public function view(?User $user, Goal $goal): bool
     {
         if ($goal->is_public) {
             return true;
         }
 
-        return $user->id === $goal->user_id;
+        return $user?->id === $goal->user_id;
     }
 
     /**
