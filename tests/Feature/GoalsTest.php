@@ -7,32 +7,45 @@ use App\Models\User;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse;
 
-use function fake;
 use function Pest\Laravel\actingAs;
 
-it('user can create a goal', function () {
+test('user can create a goal private goal', function () {
     $user = User::factory()->create();
     $goalIntent = fake()->sentence();
 
-    actingAs($user)->post(route('goals.store'), ['intent' => $goalIntent]);
+    actingAs($user)->post(route('goals.store'), ['intent' => $goalIntent, 'is_public' => false]);
 
     expect($user->goals->count())->toBe(1);
-    expect($user->goals()->first()->intent)->toBe($goalIntent);
+    $goal = $user->goals()->first();
+    expect($goal->intent)->toBe($goalIntent);
+    expect($goal->is_public)->toBe(0);
 });
 
-it('user cannot create blank goal', function () {
+test('user can create a goal public goal', function () {
+    $user = User::factory()->create();
+    $goalIntent = fake()->sentence();
+
+    actingAs($user)->post(route('goals.store'), ['intent' => $goalIntent, 'is_public' => true]);
+
+    expect($user->goals->count())->toBe(1);
+    $goal = $user->goals()->first();
+    expect($goal->intent)->toBe($goalIntent);
+    expect($goal->is_public)->toBe(1);
+});
+
+test('user cannot create blank goal', function () {
     $user = User::factory()->create();
 
     actingAs($user)->post(route('goals.store'), ['intent' => ''])->assertInvalid('intent');
 });
 
-it('user cannot create a goal over 500 characters', function () {
+test('user cannot create a goal over 500 characters', function () {
     $user = User::factory()->create();
 
     actingAs($user)->post(route('goals.store'), ['intent' => str()->random(501)])->assertInvalid('intent');
 });
 
-it('user can mark goal as complete', function () {
+test('user can mark goal as complete', function () {
     $user = User::factory()->create();
     $goal = Goal::factory()->incomplete()->for($user)->create();
 
@@ -43,7 +56,7 @@ it('user can mark goal as complete', function () {
     expect($goal->fresh()->completed)->toBeTruthy();
 });
 
-it('user can mark goal as incomplete', function () {
+test('user can mark goal as incomplete', function () {
     $user = User::factory()->create();
     $goal = Goal::factory()->completed()->for($user)->create();
 
@@ -54,7 +67,7 @@ it('user can mark goal as incomplete', function () {
     expect($goal->fresh()->completed)->toBeFalsy();
 });
 
-it('user can delete goal', function () {
+test('user can delete goal', function () {
     $user = User::factory()->create();
     $goal = Goal::factory()->for($user)->create();
 
@@ -65,7 +78,7 @@ it('user can delete goal', function () {
     expect($user->fresh()->goals()->count())->toBe(0);
 });
 
-it('user cannot update another users goals', function () {
+test('user cannot update another users goals', function () {
     $user = User::factory()->create();
     $stranger = User::factory()->create();
 
@@ -76,7 +89,7 @@ it('user cannot update another users goals', function () {
     actingAs($user)->patch(route('goals.status.complete', ['goal' => $goal]), ['completed' => true])->assertForbidden();
 });
 
-it('user cannot delete another users goal', function () {
+test('user cannot delete another users goal', function () {
     $user = User::factory()->create();
     $stranger = User::factory()->create();
 
@@ -85,14 +98,14 @@ it('user cannot delete another users goal', function () {
     actingAs($user)->delete(route('goals.destroy', ['goal' => $goal]))->assertForbidden();
 });
 
-it('users cannot see others goals', function () {
+test('users cannot see others goals on dashboard', function () {
     $user = User::factory()->has(Goal::factory()->state(['intent' => 'user 1 goal']))->create();
     User::factory()->has(Goal::factory()->state(['intent' => 'user 2 goal']))->create();
 
     actingAs($user)->get(route('dashboard'))->assertSee('user 1 goal')->assertDontSee('user 2 goal');
 });
 
-it('users first goal gets ai motivation email', function () {
+test('users first goal gets ai motivation email', function () {
     $user = User::factory()->create();
     $goal = Goal::factory()->for($user)->create();
 
@@ -115,7 +128,7 @@ it('users first goal gets ai motivation email', function () {
     Mail::assertQueued(FirstGoal::class);
 });
 
-it('users second goal does not get ai motivation email', function () {
+test('users second goal does not get ai motivation email', function () {
     $user = User::factory()->create();
     Goal::factory()->for($user)->create();
     $goal = Goal::factory()->for($user)->create();
@@ -137,4 +150,20 @@ it('users second goal does not get ai motivation email', function () {
     expect($user->goals->count())->toBe(2);
 
     Mail::assertNotQueued(FirstGoal::class);
+});
+
+test('users can see others public goal', function () {
+    $user = User::factory()->create();
+    $user2 = User::factory()->has(Goal::factory()->state(['intent' => 'user 2 goal', 'is_public' => true]))->create();
+    $goal = $user2->goals()->first();
+
+    actingAs($user)->get(route('goals.show', ['goal' => $goal]))->assertSee('user 2 goal');
+});
+
+test('users cannot see others private goal', function () {
+    $user = User::factory()->create();
+    $user2 = User::factory()->has(Goal::factory()->state(['intent' => 'user 2 goal', 'is_public' => false]))->create();
+    $goal = $user2->goals()->first();
+
+    actingAs($user)->get(route('goals.show', ['goal' => $goal]))->assertDontSee('user 2 goal')->assertForbidden();
 });
