@@ -38,5 +38,7 @@ Route::get('goals/{goal}', [GoalController::class, 'show'])->can('view', 'goal')
 
 Route::post('goals/{goal}/comments', [CommentController::class, 'store'])->can('comment', 'goal')->name('comments.store');
 
+Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->can('delete', 'comment')->name('comments.destroy');
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

@@ -17,7 +17,9 @@ class MotivationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'motivation' => $this->faker->paragraph(3),
+            'assistant_prompt' => $this->faker->sentence(),
+            'user_prompt' => $this->faker->sentence(),
         ];
     }
 }

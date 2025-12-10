@@ -14,7 +14,7 @@ export function CommentForm({ goal }: { goal: GoalType }) {
     const placeholder = can.update_goal ? 'Post a comment or document your progress.' : `Want to give ${goal?.user?.name} some motivation/feedback?`;
 
     return (
-        <Form action={store(goal.id)} resetOnSuccess disableWhileProcessing onSuccess={() => setLocalStorage('')}>
+        <Form action={store(goal.id)} resetOnSuccess disableWhileProcessing onSuccess={() => setLocalStorage('')} options={{ only: ['comments'] }}>
             {({ errors, processing, submit }) => (
                 <>
                     <Textarea

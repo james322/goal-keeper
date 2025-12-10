@@ -45,7 +45,7 @@ export interface ShowGoalData extends SharedData {
 }
 
 export interface User {
-    id: number;
+    id: string;
     name: string;
     email: string;
     avatar?: string;
@@ -59,6 +59,7 @@ export interface GoalType {
     id: string;
     intent: string;
     is_public: boolean;
+    user_id: string;
     motivation: Motivation | null;
     completed: string | null;
     created_at: string;
