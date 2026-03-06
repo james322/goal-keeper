@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Prompt;
 use App\Models\WeeklyPrompt;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,8 +17,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $prompts = file_get_contents(base_path().'/prompts.json');
-        $weeklyPrompts = file_get_contents(base_path().'/weekly-prompts.json');
+        $prompts = Storage::get('prompts.json');
+        $weeklyPrompts = Storage::get('weekly-prompts.json');
 
         throw_unless($prompts, 'failed to open prompts.json');
         throw_unless($weeklyPrompts, 'failed to open prompts.json');
