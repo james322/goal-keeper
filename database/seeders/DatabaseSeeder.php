@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $weeklyPrompts = json_decode($weeklyPrompts);
 
         foreach ($prompts->prompts as $prompt) {
-            Prompt::factory()->create([
+            Prompt::create([
                 'assistant' => $prompt->assistant,
                 'user' => $prompt->user,
                 'personality' => $prompt->personality,
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ($weeklyPrompts->prompts as $weeklyPrompt) {
-            WeeklyPrompt::factory()->create([
+            WeeklyPrompt::create([
                 'assistant' => $weeklyPrompt->assistant,
                 'user' => $weeklyPrompt->user,
                 'personality' => $weeklyPrompt->personality,
